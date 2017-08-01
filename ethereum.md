@@ -32,6 +32,17 @@
 - Nur Geld auf deinen eigenen Adressen ist sicher
 - Adressen sind durch Public/Private-Key-Verfahren gesichert
 ---
+# Überweisungen
+Mit Hilfe von *geth*
+
+    var from = eth.accounts[0];
+    var to = '0x4c1856C9021DB812f0B73785081b245f622D58ec';
+    var amount = web3.toWei(1, 'ether');
+    web3.personal.unlockAccount(from, 'PASSWORD');
+    eth.sendTransaction({from: from, to: to, value: amount});
+    web3.personal.lockAccount(from);
+    
+---
 # Handel
 - Marktplätze wie kraken.com
 
@@ -84,9 +95,32 @@
 
   - Byte-Code, Ethereum Virtual Machine (EVM), deterministisch, keine Seiteneffekte
   - Läuft auf __allen__ Peers
+  - Besitzen Storage
   
 - Zum Ausführen eines Smart-Contracts muss der Auslösende Gas bezahlen
 - Diverse Programmiersprachen, die nach EVM kompilieren, u.a. Solidity (angelehnt an JavaScript)
+---
+# Smart Contract Beispiel
+
+    contract OwnedContract {
+        bytes32 public name = 'Owned Contract';
+        address public owner;
+
+        function OwnedContract() {
+            owner = msg.sender;
+        }
+
+        modifier isOwner() {
+            require(msg.sender == owner);
+            _;
+        }
+
+        function OwnedFunction() isOwner {
+        }
+    }
+
+Von http://linuxforme.com/ethereum-smart-contracts-in-a-nutshell-for-hackers.html
+
 ---
 # Fragen?
 - Entweder per Twitter an @schakko
