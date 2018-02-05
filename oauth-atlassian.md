@@ -1,25 +1,38 @@
-# OAuth
-## Am Beispiel von Atlassian-Anwendungen (OAuth 1.0a)
+# OAuth 1.0a und OAuth 2
+## Am Beispiel von Atlassian-Anwendungen
+
+<br/>
+<br/>
+<small>Disclaimer: Dieser Talk behandelt das Thema nur oberflächlich.</small>
+
 ---
 # Allgemein
 - Standard zur Autorisierung von Zugriffen auf Ressourcen
-- OAuth
-- 	- RFC-5849
-- OAuth2
-	- RFC-6479
+- OAuth (seit 2006, veröffentlicht 2007)
+ 	- RFC-5849
+- OAuth 2 (RFC veröffentlicht 2012)
+	- RFC-6749
 	- vereinfacht den Zugriff
----
-# OAuth 1.0a - Begriffe
-- Consumer: Client
-- Service Provider
-- User
-- Consumer Key und Secret
-- Request Token und Secret
-- Access Token und Secret
----
+	- Signierung fällt weg, Verantwortlichkeit liegt bei TLS
+	- Scopes
+	- Refresh Tokens
 
-# OAuth 1.0a - Workflow
-tbd
+---
+# Begriffe
+|OAuth 1.0a|OAuth 2 (Rollen)|Beispiel|
+|----|-----|---|
+|User|Resource owner|Mein Jira-Account|
+|Service Provider|Resource server|Jira|
+|Consumer|Client|Meine App|
+|---|Authorization Server|Jira, Crowd|
+---
+# Begriffe
+|OAuth 1.0a|OAuth 2|Kontext|
+|----|-----|---|
+|Consumer Key und Secret|Client Id und Client Secret|Anwendung|
+|Request Token und Secret|---|Benutzer|
+|Access Token und Secret|Access Token|Session|
+|---|Scope|Resource|
 
 ---
 # OAuth 1.0a - 2-legged vs. 3-legged
@@ -30,16 +43,11 @@ tbd
 
 ---
 
-# OAuth2 - Begriffe
-tbd
+# OAuth 1.0a - Workflow
+<img src="oauth1.0a-3legged.png" />
 
----
+<small>Siehe <a href="http://oauthbible.com/">http://oauthbible.com/</a></small>
 
-# OAuth2 - Rollen
-- Resource server - Jira
-- Resource owner - mein Jira-Account
-- Authorization server - Jira, Crowd
-- Client - meine Anwendung, die auf Jira zugreift
 ---
 # OAuth2 - Workflow
 
@@ -60,12 +68,22 @@ tbd
      |        |                               |     Server    |
      |        |<-(F)--- Protected Resource ---|               |
      +--------+                               +---------------+
-siehe https://tools.ietf.org/html/rfc6749
+
+<small>siehe <a href="https://tools.ietf.org/html/rfc6749">https://tools.ietf.org/html/rfc6749</a></small>
+
+---
+
+# Alles nicht so einfach
+
+- OAuth 1.0a Workflow komplex
+- Art und Weise der Datenübergabe abhängig vom Service Provider / Resource Server (Header, Query-Parameter)
+- Workflow hängt vom Service Provider / Resource Server ab (Twitter)
+- Spring: Konfiguration von OAuth 2 deutlich einfacher
 
 ---
 # Beispiel
 - Zugriff auf Atlassian-Dienste via OAuth 1.0a
-	- OAuth2 nur für Connect-Anwendungen
+	- OAuth2 (mit JWT) nur für Connect-Anwendungen :-/
 - Atlassian bietet Beispielquellcode an
 - jira-rest-client unterstützt nur Basic Auth
 
@@ -73,7 +91,7 @@ siehe https://tools.ietf.org/html/rfc6749
 # getRequestToken
 
 	public TokenSecretVerifierHolder getRequestToken() {
-		// provider enthält u.a. consumerKey 
+		// provider enth채lt u.a. consumerKey 
 		// und consumerSecret und erzeugt den OAuthAccesor
 		OAuthAccessor accessor = provider.getAccessor();
 		OAuthClient oAuthClient = createOAuthClient();
@@ -139,3 +157,10 @@ siehe https://tools.ietf.org/html/rfc6749
 		System.out.println("Storing your access token '" + accessToken
 				+ "' in the database. Token is used for every request you are making to '"
 				+ atlassianOAuthProvider.getBaseUrl() + "'");
+
+---
+# Fazit
+- Wenn möglich, OAuth 2 einsetzen
+- Workflow ausdrucken
+- RFC lesen, Doku lesen
+- Workflow ausdrucken
