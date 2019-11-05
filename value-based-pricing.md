@@ -6,7 +6,7 @@
 <small>Disclaimer: Wir schauen auf die IT-Bubble außerhalb der ansässigen Automobilindustrie.</small>
 
 ---
-# Kurze Handmledung: Wer hat schon einmal DLCs (Skins) gekauft?
+# Kurze Handmeldung: Wer hat schon einmal DLCs (Skins) gekauft?
 
 ---
 # Wie kommt ein Angebot zustande?
@@ -60,7 +60,7 @@
 
 ---
 ## Agiler Festpreis
-- Igendwas mit "gil" und wahrscheinlich Scrum. Dass muss gut sein.
+- Igendwas mit "agil" und wahrscheinlich Scrum. Dass muss gut sein.
 - Anhand von Story Points, Business-Value und Risiken ergibt sich ein Festpreisrahmen pro User Story oder Sprint
 - Überschreitung des Festpreises kann bspw. Kunden in Rechung gestellt werden
 - Gefahren:
